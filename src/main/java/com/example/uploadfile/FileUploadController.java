@@ -35,7 +35,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/files/{filename:.+}")
-    @ResponseBody   // si exisite el file lo envia al navegador para donwload mediante CONTENT_DISPO header.
+    @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename){
         Resource file = storageService.loadAsResource(filename);
 
@@ -43,7 +43,7 @@ public class FileUploadController {
                 file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/")   //Maneja partes del archivo y lo manda a StorageService para guardarlo
+    @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
         storageService.store(file);
         redirectAttributes.addFlashAttribute("message", "You successfulñy uploaded"+
